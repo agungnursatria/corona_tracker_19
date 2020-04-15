@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="region"
+            type="String" />
+
+        <variable
+            name="country"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_country"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/v"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/border"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_region"
+            style="@style/BoldTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/m16"
+            android:layout_marginLeft="@dimen/m16"
+            android:layout_marginTop="@dimen/m12"
+            android:layout_marginEnd="@dimen/m16"
+            android:layout_marginBottom="@dimen/m12"
+            android:text="@{region}"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_country"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/v"
+            tools:text="Wuhan" />
+
+
+        <TextView
+            android:id="@+id/tv_country"
+            style="@style/DefaultTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/m12"
+            android:layout_marginEnd="@dimen/m16"
+            android:layout_marginRight="@dimen/m16"
+            android:layout_marginBottom="@dimen/m12"
+            android:gravity="end"
+            android:text="@{country}"
+            android:textAlignment="viewEnd"
+            android:textColor="@color/subtitle_darker"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/v"
+            tools:text="China" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

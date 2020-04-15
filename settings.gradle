@@ -1,0 +1,6 @@
+rootProject.name='Corona Track'
+include ':app'
+include ':domain'
+include ':network'
+include ':utils'
+include ':data'

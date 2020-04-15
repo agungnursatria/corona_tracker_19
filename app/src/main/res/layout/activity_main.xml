@@ -1,0 +1,894 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="overview"
+            type="tech.awesome.data.network.Overview" />
+
+        <variable
+            name="overviewCountry"
+            type="tech.awesome.data.network.Overview" />
+
+        <variable
+            name="countryName"
+            type="String" />
+
+        <variable
+            name="countryFlag"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.main.MainActivity">
+
+        <ImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginStart="@dimen/m16"
+            android:layout_marginLeft="@dimen/m16"
+            android:layout_marginTop="@dimen/m16"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/logo_dashboard"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/m16"
+            android:layout_marginRight="@dimen/m16"
+            android:contentDescription="@string/app_name"
+            android:foreground="?attr/selectableItemBackground"
+            android:src="@drawable/ic_color_mode"
+            app:layout_constraintBottom_toBottomOf="@id/iv_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_logo"
+            tools:ignore="UnusedAttribute" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/sv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_logo">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/m16"
+                android:paddingLeft="@dimen/m16"
+                android:paddingEnd="@dimen/m16"
+                android:paddingRight="@dimen/m16"
+                android:paddingBottom="@dimen/m24">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_report"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_item_menu_content"
+                    android:padding="@dimen/m16">
+
+                    <TextView
+                        android:id="@+id/tv_report_title"
+                        style="@style/BoldTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_todays_report"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_report_last_update_date"
+                        style="@style/DefaultTextView"
+                        setLatestUpdateTime="@{overview.lastUpdate}"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/m8"
+                        android:textColor="@color/subtitle_darker"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="@id/tv_report_title"
+                        app:layout_constraintStart_toStartOf="@id/tv_report_title"
+                        app:layout_constraintTop_toBottomOf="@id/tv_report_title"
+                        tools:text="Last Update: 1 April 2020, 17.00" />
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/sfl_report_last_update_date"
+                        android:layout_width="200dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/bg_rounded_placeholder"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_report_last_update_date"
+                        app:layout_constraintStart_toStartOf="@id/tv_report_last_update_date"
+                        app:layout_constraintTop_toTopOf="@id/tv_report_last_update_date" />
+
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/pc_report"
+                        android:layout_width="160dp"
+                        android:layout_height="160dp"
+                        android:layout_marginTop="@dimen/m24"
+                        app:layout_constraintStart_toStartOf="@id/tv_report_title"
+                        app:layout_constraintTop_toBottomOf="@id/tv_report_last_update_date" />
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/lc_report"
+                        android:layout_width="match_parent"
+                        android:layout_height="160dp"
+                        android:layout_marginTop="@dimen/m24"
+                        android:visibility="invisible"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_report_last_update_date" />
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/sfl_report_chart"
+                        android:layout_width="160dp"
+                        android:layout_height="160dp"
+                        android:layout_marginTop="@dimen/m24"
+                        android:background="@drawable/bg_rounded_placeholder"
+                        app:layout_constraintStart_toStartOf="@id/tv_report_title"
+                        app:layout_constraintTop_toBottomOf="@id/tv_report_last_update_date" />
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_confirmed"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="@id/tv_report_title"
+                        app:layout_constraintStart_toEndOf="@id/pc_report"
+                        app:layout_constraintTop_toTopOf="@id/pc_report">
+
+                        <View
+                            android:id="@+id/blank_1"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_report_confirmed_value"
+                            app:layout_constraintEnd_toStartOf="@id/iv_report_confirmed_color"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/iv_report_confirmed_color"
+                            android:layout_width="24dp"
+                            android:layout_height="8dp"
+                            android:src="@drawable/bg_indicator_confirmed"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_report_confirmed_label"
+                            app:layout_constraintEnd_toStartOf="@id/tv_report_confirmed_label"
+                            app:layout_constraintStart_toEndOf="@id/blank_1"
+                            app:layout_constraintTop_toTopOf="@id/tv_report_confirmed_label"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:id="@+id/tv_report_confirmed_label"
+                            style="@style/DefaultTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginStart="@dimen/m8"
+                            android:layout_marginLeft="@dimen/m8"
+                            android:paddingEnd="@dimen/m8"
+                            android:paddingRight="@dimen/m8"
+                            android:minWidth="80dp"
+                            android:text="@string/label_confirmed"
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/iv_report_confirmed_color"
+                            app:layout_constraintTop_toTopOf="@id/blank_1" />
+
+                        <TextView
+                            android:id="@+id/tv_report_confirmed_value"
+                            style="@style/BoldTextView"
+                            setOverviewValue="@{overview.confirmed}"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="@dimen/m4"
+                            android:textColor="@android:color/white"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="@id/tv_report_confirmed_label"
+                            app:layout_constraintStart_toStartOf="@id/iv_report_confirmed_color"
+                            app:layout_constraintTop_toBottomOf="@id/tv_report_confirmed_label"
+                            tools:text="@string/ex_num" />
+
+                        <com.facebook.shimmer.ShimmerFrameLayout
+                            android:id="@+id/sfl_report_confirmed_value"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:background="@drawable/bg_rounded_placeholder"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_report_confirmed_value"
+                            app:layout_constraintEnd_toEndOf="@id/tv_report_confirmed_value"
+                            app:layout_constraintStart_toStartOf="@id/tv_report_confirmed_value"
+                            app:layout_constraintTop_toTopOf="@id/tv_report_confirmed_value" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_recovered"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="@id/cl_confirmed"
+                        app:layout_constraintStart_toStartOf="@id/cl_confirmed"
+                        app:layout_constraintTop_toBottomOf="@id/cl_confirmed">
+
+                        <View
+                            android:id="@+id/blank_2"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="@dimen/m8"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_report_recovered_value"
+                            app:layout_constraintEnd_toStartOf="@id/iv_report_recovered_color"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/iv_report_recovered_color"
+                            android:layout_width="24dp"
+                            android:layout_height="8dp"
+                            android:src="@drawable/bg_indicator_recovered"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_report_recovered_label"
+                            app:layout_constraintEnd_toStartOf="@id/tv_report_recovered_label"
+                            app:layout_constraintStart_toEndOf="@id/blank_2"
+                            app:layout_constraintTop_toTopOf="@id/tv_report_recovered_label"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:id="@+id/tv_report_recovered_label"
+                            style="@style/DefaultTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginStart="@dimen/m8"
+                            android:layout_marginLeft="@dimen/m8"
+                            android:paddingEnd="@dimen/m8"
+                            android:paddingRight="@dimen/m8"
+                            android:minWidth="80dp"
+                            android:text="@string/label_recovered"
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/iv_report_recovered_color"
+                            app:layout_constraintTop_toTopOf="@id/blank_2" />
+
+                        <TextView
+                            android:id="@+id/tv_report_recovered_value"
+                            style="@style/BoldTextView"
+                            setOverviewValue="@{overview.recovered}"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="@dimen/m4"
+                            android:textColor="@android:color/white"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="@id/tv_report_recovered_label"
+                            app:layout_constraintStart_toStartOf="@id/iv_report_recovered_color"
+                            app:layout_constraintTop_toBottomOf="@id/tv_report_recovered_label"
+                            tools:text="@string/ex_num" />
+
+                        <com.facebook.shimmer.ShimmerFrameLayout
+                            android:id="@+id/sfl_report_recovered_value"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:background="@drawable/bg_rounded_placeholder"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_report_recovered_value"
+                            app:layout_constraintEnd_toEndOf="@id/tv_report_recovered_value"
+                            app:layout_constraintStart_toStartOf="@id/tv_report_recovered_value"
+                            app:layout_constraintTop_toTopOf="@id/tv_report_recovered_value" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_deaths"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="@id/cl_recovered"
+                        app:layout_constraintStart_toStartOf="@id/cl_recovered"
+                        app:layout_constraintTop_toBottomOf="@id/cl_recovered">
+
+                        <View
+                            android:id="@+id/blank_3"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="@dimen/m8"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_report_death_value"
+                            app:layout_constraintEnd_toStartOf="@id/iv_report_death_color"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/iv_report_death_color"
+                            android:layout_width="24dp"
+                            android:layout_height="8dp"
+                            android:src="@drawable/bg_indicator_death"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_report_death_label"
+                            app:layout_constraintEnd_toStartOf="@id/tv_report_death_label"
+                            app:layout_constraintStart_toEndOf="@id/blank_3"
+                            app:layout_constraintTop_toTopOf="@id/tv_report_death_label"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:id="@+id/tv_report_death_label"
+                            style="@style/DefaultTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginStart="@dimen/m8"
+                            android:layout_marginLeft="@dimen/m8"
+                            android:minWidth="80dp"
+                            android:paddingEnd="@dimen/m8"
+                            android:paddingRight="@dimen/m8"
+                            android:text="@string/label_death"
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/iv_report_death_color"
+                            app:layout_constraintTop_toTopOf="@id/blank_3" />
+
+                        <TextView
+                            android:id="@+id/tv_report_death_value"
+                            style="@style/BoldTextView"
+                            setOverviewValue="@{overview.deaths}"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="@dimen/m4"
+                            android:textColor="@android:color/white"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@id/tv_report_death_label"
+                            app:layout_constraintStart_toStartOf="@id/iv_report_death_color"
+                            app:layout_constraintTop_toBottomOf="@id/tv_report_death_label"
+                            tools:text="@string/ex_num" />
+
+                        <com.facebook.shimmer.ShimmerFrameLayout
+                            android:id="@+id/sfl_report_death_value"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:background="@drawable/bg_rounded_placeholder"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_report_death_value"
+                            app:layout_constraintEnd_toEndOf="@id/tv_report_death_value"
+                            app:layout_constraintStart_toStartOf="@id/tv_report_death_value"
+                            app:layout_constraintTop_toTopOf="@id/tv_report_death_value" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <ImageView
+                        android:id="@+id/iv_btn_chart_pie"
+                        android:layout_width="@dimen/m24"
+                        android:layout_height="@dimen/m24"
+                        android:layout_marginTop="@dimen/m24"
+                        android:src="@drawable/ic_pie_chart_active"
+                        app:layout_constraintStart_toStartOf="@id/tv_report_title"
+                        app:layout_constraintTop_toBottomOf="@id/cl_deaths"
+                        tools:ignore="ContentDescription" />
+
+                    <ImageView
+                        android:id="@+id/iv_btn_chart_graph"
+                        android:layout_width="@dimen/m24"
+                        android:layout_height="@dimen/m24"
+                        android:layout_marginStart="@dimen/m16"
+                        android:layout_marginLeft="@dimen/m16"
+                        android:src="@drawable/ic_graph_inactive"
+                        app:layout_constraintStart_toEndOf="@id/iv_btn_chart_pie"
+                        app:layout_constraintTop_toTopOf="@id/iv_btn_chart_pie"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/tv_label_source"
+                        style="@style/DefaultTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/m16"
+                        android:lineSpacingExtra="6sp"
+                        android:text="@string/tv_data_source"
+                        android:textColor="@color/subtitle_darker"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="@id/tv_report_title"
+                        app:layout_constraintTop_toBottomOf="@id/iv_btn_chart_pie" />
+
+                    <TextView
+                        android:id="@+id/tv_daily_updates"
+                        style="@style/DefaultTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/m16"
+                        android:lineSpacingExtra="6sp"
+                        android:text="@string/label_read_daily_updates"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/tv_report_title"
+                        app:layout_constraintTop_toBottomOf="@id/tv_label_source" />
+
+                    <ImageView
+                        android:id="@+id/iv_report_map"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_map"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_country_selected"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/m16"
+                    android:background="@drawable/bg_item_menu_content"
+                    android:padding="@dimen/m16">
+
+                    <ImageView
+                        android:id="@+id/iv_country_selected_flag"
+                        setFlagImage="@{countryFlag}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_placeholder_flag"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/sfl_country_selected_flag"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/ic_placeholder_flag"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_country_selected_flag"
+                        app:layout_constraintEnd_toEndOf="@id/iv_country_selected_flag"
+                        app:layout_constraintStart_toStartOf="@id/iv_country_selected_flag"
+                        app:layout_constraintTop_toTopOf="@id/iv_country_selected_flag" />
+
+                    <TextView
+                        android:id="@+id/tv_country_selected_name"
+                        style="@style/BoldTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/m8"
+                        android:layout_marginLeft="@dimen/m8"
+                        android:layout_marginEnd="@dimen/m16"
+                        android:layout_marginRight="@dimen/m16"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@{countryName}"
+                        android:textColor="@android:color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@id/iv_country_selected_edit"
+                        app:layout_constraintStart_toEndOf="@id/iv_country_selected_flag"
+                        app:layout_constraintTop_toTopOf="@id/iv_country_selected_flag"
+                        tools:text="Indonesia" />
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/sfl_country_selected_name"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/bg_rounded_placeholder"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_country_selected_name"
+                        app:layout_constraintEnd_toEndOf="@id/tv_country_selected_name"
+                        app:layout_constraintStart_toStartOf="@id/tv_country_selected_name"
+                        app:layout_constraintTop_toTopOf="@id/tv_country_selected_name" />
+
+                    <ImageView
+                        android:id="@+id/iv_country_selected_edit"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_edit"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <FrameLayout
+                        android:id="@+id/f_country_selected_map"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="@dimen/m16"
+                        android:background="@color/bg_canvas"
+                        app:layout_constraintTop_toBottomOf="@id/tv_country_selected_name" />
+
+                    <TextView
+                        android:id="@+id/tv_country_selected_confirmed_label"
+                        style="@style/DefaultTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/m16"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/label_confirmed"
+                        android:textColor="@color/confirmed"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toStartOf="@id/tv_country_selected_recovered_label"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/f_country_selected_map" />
+
+                    <TextView
+                        android:id="@+id/tv_country_selected_confirmed_value"
+                        style="@style/BoldTextView"
+                        setOverviewValue="@{overviewCountry.confirmed}"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/m8"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="@id/tv_country_selected_confirmed_label"
+                        app:layout_constraintStart_toStartOf="@id/tv_country_selected_confirmed_label"
+                        app:layout_constraintTop_toBottomOf="@id/tv_country_selected_confirmed_label"
+                        tools:text="@string/ex_num" />
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/sfl_country_selected_confirmed_value"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/bg_rounded_placeholder"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_country_selected_confirmed_value"
+                        app:layout_constraintEnd_toEndOf="@id/tv_country_selected_confirmed_value"
+                        app:layout_constraintStart_toStartOf="@id/tv_country_selected_confirmed_value"
+                        app:layout_constraintTop_toTopOf="@id/tv_country_selected_confirmed_value" />
+
+                    <TextView
+                        android:id="@+id/tv_country_selected_recovered_label"
+                        style="@style/DefaultTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/m16"
+                        android:layout_marginLeft="@dimen/m16"
+                        android:layout_marginTop="@dimen/m16"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/label_recovered"
+                        android:textColor="@color/recovered"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toStartOf="@id/tv_country_selected_deaths_label"
+                        app:layout_constraintStart_toEndOf="@id/tv_country_selected_confirmed_label"
+                        app:layout_constraintTop_toBottomOf="@id/f_country_selected_map" />
+
+                    <TextView
+                        android:id="@+id/tv_country_selected_recovered_value"
+                        style="@style/BoldTextView"
+                        setOverviewValue="@{overviewCountry.recovered}"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/m8"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="@id/tv_country_selected_recovered_label"
+                        app:layout_constraintStart_toStartOf="@id/tv_country_selected_recovered_label"
+                        app:layout_constraintTop_toBottomOf="@id/tv_country_selected_recovered_label"
+                        tools:text="@string/ex_num" />
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/sfl_country_selected_recovered_value"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/bg_rounded_placeholder"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_country_selected_recovered_value"
+                        app:layout_constraintEnd_toEndOf="@id/tv_country_selected_recovered_value"
+                        app:layout_constraintStart_toStartOf="@id/tv_country_selected_recovered_value"
+                        app:layout_constraintTop_toTopOf="@id/tv_country_selected_recovered_value" />
+
+                    <TextView
+                        android:id="@+id/tv_country_selected_deaths_label"
+                        style="@style/BoldTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/m16"
+                        android:layout_marginLeft="@dimen/m16"
+                        android:layout_marginTop="@dimen/m16"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/label_death"
+                        android:textColor="@color/death"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tv_country_selected_recovered_label"
+                        app:layout_constraintTop_toBottomOf="@id/f_country_selected_map" />
+
+                    <TextView
+                        android:id="@+id/tv_country_selected_deaths_value"
+                        style="@style/DefaultTextView"
+                        setOverviewValue="@{overviewCountry.deaths}"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/m8"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="@id/tv_country_selected_deaths_label"
+                        app:layout_constraintStart_toStartOf="@id/tv_country_selected_deaths_label"
+                        app:layout_constraintTop_toBottomOf="@id/tv_country_selected_deaths_label"
+                        tools:text="@string/ex_num" />
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/sfl_country_selected_deaths_value"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/bg_rounded_placeholder"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_country_selected_deaths_value"
+                        app:layout_constraintEnd_toEndOf="@id/tv_country_selected_deaths_value"
+                        app:layout_constraintStart_toStartOf="@id/tv_country_selected_deaths_value"
+                        app:layout_constraintTop_toTopOf="@id/tv_country_selected_deaths_value" />
+
+                    <TextView
+                        android:id="@+id/tv_country_selected_last_update_date"
+                        style="@style/BoldTextView"
+                        setLatestUpdateTime="@{overviewCountry.lastUpdate}"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/m8"
+                        android:textColor="@color/subtitle_darker"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="@id/tv_country_selected_deaths_label"
+                        app:layout_constraintStart_toStartOf="@id/tv_country_selected_confirmed_label"
+                        app:layout_constraintTop_toBottomOf="@id/tv_country_selected_confirmed_value"
+                        app:layout_goneMarginTop="@dimen/m16"
+                        tools:text="Last Update: 1 April 2020, 17.00" />
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/sfl_country_selected_last_update_date"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/bg_rounded_placeholder"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_country_selected_last_update_date"
+                        app:layout_constraintEnd_toEndOf="@id/tv_country_selected_last_update_date"
+                        app:layout_constraintStart_toStartOf="@id/tv_country_selected_last_update_date"
+                        app:layout_constraintTop_toTopOf="@id/tv_country_selected_last_update_date" />
+
+                    <ImageView
+                        android:id="@+id/tv_country_selected_map"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginTop="@dimen/m16"
+                        android:src="@drawable/ic_map_2"
+                        app:layout_constraintStart_toStartOf="@id/iv_country_selected_flag"
+                        app:layout_constraintTop_toBottomOf="@id/tv_country_selected_last_update_date"
+                        tools:ignore="ContentDescription" />
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/sfl_country_selected_map"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/bg_rounded_placeholder"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_country_selected_map"
+                        app:layout_constraintEnd_toEndOf="@id/tv_country_selected_map"
+                        app:layout_constraintStart_toStartOf="@id/tv_country_selected_map"
+                        app:layout_constraintTop_toTopOf="@id/tv_country_selected_map" />
+
+                    <ImageView
+                        android:id="@+id/tv_country_selected_chart"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginStart="@dimen/m16"
+                        android:layout_marginLeft="@dimen/m16"
+                        android:layout_marginTop="@dimen/m16"
+                        android:src="@drawable/ic_pie_chart_inactive"
+                        app:layout_constraintStart_toEndOf="@id/tv_country_selected_map"
+                        app:layout_constraintTop_toBottomOf="@id/tv_country_selected_last_update_date"
+                        tools:ignore="ContentDescription" />
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/sfl_country_selected_chart"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/bg_rounded_placeholder"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_country_selected_chart"
+                        app:layout_constraintEnd_toEndOf="@id/tv_country_selected_chart"
+                        app:layout_constraintStart_toStartOf="@id/tv_country_selected_chart"
+                        app:layout_constraintTop_toTopOf="@id/tv_country_selected_chart" />
+
+
+                    <ImageView
+                        android:id="@+id/tv_country_selected_info"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginStart="@dimen/m16"
+                        android:layout_marginLeft="@dimen/m16"
+                        android:layout_marginTop="@dimen/m16"
+                        android:src="@drawable/ic_info"
+                        app:layout_constraintStart_toEndOf="@id/tv_country_selected_chart"
+                        app:layout_constraintTop_toBottomOf="@id/tv_country_selected_last_update_date"
+                        tools:ignore="ContentDescription" />
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/sfl_country_selected_info"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/bg_rounded_placeholder"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_country_selected_info"
+                        app:layout_constraintEnd_toEndOf="@id/tv_country_selected_info"
+                        app:layout_constraintStart_toStartOf="@id/tv_country_selected_info"
+                        app:layout_constraintTop_toTopOf="@id/tv_country_selected_info" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_country"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/m16"
+                    android:background="@drawable/bg_item_menu_content"
+                    android:foreground="?attr/selectableItemBackground"
+                    tools:ignore="UnusedAttribute">
+
+                    <ImageView
+                        android:id="@+id/iv_menu_country_logo"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_marginStart="@dimen/m16"
+                        android:layout_marginLeft="@dimen/m16"
+                        android:layout_marginTop="@dimen/m16"
+                        android:src="@drawable/ic_flag"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/tv_menu_country_title"
+                        style="@style/BoldTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/m8"
+                        android:layout_marginLeft="@dimen/m8"
+                        android:layout_marginEnd="@dimen/m16"
+                        android:layout_marginRight="@dimen/m16"
+                        android:text="@string/label_add_country"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/iv_menu_country_logo"
+                        app:layout_constraintTop_toTopOf="@id/iv_menu_country_logo" />
+
+                    <TextView
+                        android:id="@+id/tv_menu_country_subtitle"
+                        style="@style/DefaultTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginBottom="@dimen/m16"
+                        android:text="@string/label_sub_add_country"
+                        android:textColor="@color/subtitle"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/tv_menu_country_title"
+                        app:layout_constraintStart_toStartOf="@id/tv_menu_country_title"
+                        app:layout_constraintTop_toBottomOf="@id/tv_menu_country_title" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_tips"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/m16"
+                    android:background="@drawable/bg_item_menu_content"
+                    android:foreground="?attr/selectableItemBackground"
+                    tools:ignore="UnusedAttribute">
+
+                    <ImageView
+                        android:id="@+id/iv_menu_tips_logo"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_marginStart="@dimen/m16"
+                        android:layout_marginLeft="@dimen/m16"
+                        android:layout_marginTop="@dimen/m16"
+                        android:src="@drawable/ic_hand_clean"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/tv_menu_tips_title"
+                        style="@style/BoldTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/m8"
+                        android:layout_marginLeft="@dimen/m8"
+                        android:layout_marginEnd="@dimen/m16"
+                        android:layout_marginRight="@dimen/m16"
+                        android:text="@string/label_keep_clean"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/iv_menu_tips_logo"
+                        app:layout_constraintTop_toTopOf="@id/iv_menu_tips_logo" />
+
+                    <TextView
+                        android:id="@+id/tv_menu_tips_subtitle"
+                        style="@style/DefaultTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginBottom="@dimen/m16"
+                        android:text="@string/label_sub_keep_clean"
+                        android:textColor="@color/subtitle"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/tv_menu_tips_title"
+                        app:layout_constraintStart_toStartOf="@id/tv_menu_tips_title"
+                        app:layout_constraintTop_toBottomOf="@id/tv_menu_tips_title" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_symptoms"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/m16"
+                    android:background="@drawable/bg_item_menu_content"
+                    android:foreground="?attr/selectableItemBackground"
+                    tools:ignore="UnusedAttribute">
+
+                    <ImageView
+                        android:id="@+id/iv_menu_symptoms_logo"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_marginStart="@dimen/m16"
+                        android:layout_marginLeft="@dimen/m16"
+                        android:layout_marginTop="@dimen/m16"
+                        android:src="@drawable/ic_symptoms"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/tv_menu_symptoms_title"
+                        style="@style/BoldTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/m8"
+                        android:layout_marginLeft="@dimen/m8"
+                        android:layout_marginEnd="@dimen/m16"
+                        android:layout_marginRight="@dimen/m16"
+                        android:text="@string/label_have_symptoms"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/iv_menu_symptoms_logo"
+                        app:layout_constraintTop_toTopOf="@id/iv_menu_symptoms_logo" />
+
+                    <TextView
+                        android:id="@+id/tv_menu_symtoms_subtitle"
+                        style="@style/DefaultTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginBottom="@dimen/m16"
+                        android:text="@string/label_sub_have_symptoms"
+                        android:textColor="@color/subtitle"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/tv_menu_symptoms_title"
+                        app:layout_constraintStart_toStartOf="@id/tv_menu_symptoms_title"
+                        app:layout_constraintTop_toBottomOf="@id/tv_menu_symptoms_title" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

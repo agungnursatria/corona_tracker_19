@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="tech.awesome.coronatrack.ui.daily_updates.DailyUpdatesActivity">
+
+    <data>
+
+        <variable
+            name="shownIndex"
+            type="Integer" />
+
+        <variable
+            name="lastUpdate"
+            type="String" />
+
+        <variable
+            name="confirmed"
+            type="Integer" />
+
+        <variable
+            name="recovered"
+            type="Integer" />
+
+        <variable
+            name="deaths"
+            type="Integer" />
+
+        <variable
+            name="countries"
+            type="tech.awesome.data.network.Countries" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/apb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:elevation="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/bg_canvas"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/srl"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/apb">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tv_last_update"
+                    style="@style/DefaultTextView"
+                    setFormattedDate2="@{lastUpdate}"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/m24"
+                    android:layout_marginLeft="@dimen/m24"
+                    android:layout_marginTop="@dimen/m8"
+                    android:layout_marginEnd="@dimen/m24"
+                    android:layout_marginRight="@dimen/m24"
+                    android:textColor="@color/subtitle_darker"
+                    android:visibility="invisible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Last Update: 1 April 2020, 17.00" />
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/sfl_last_update"
+                    android:layout_width="200dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/bg_rounded_placeholder"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_last_update"
+                    app:layout_constraintStart_toStartOf="@id/tv_last_update"
+                    app:layout_constraintTop_toTopOf="@id/tv_last_update" />
+
+
+                <TextView
+                    android:id="@+id/tv_confirmed_label"
+                    style="@style/BoldTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/m16"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/label_confirmed"
+                    android:textColor="@color/confirmed"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@id/tv_recovered_label"
+                    app:layout_constraintStart_toStartOf="@id/tv_last_update"
+                    app:layout_constraintTop_toBottomOf="@id/tv_last_update" />
+
+                <TextView
+                    android:id="@+id/tv_confirmed_value"
+                    style="@style/BoldTextView"
+                    setOverviewValue="@{confirmed}"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/m8"
+                    android:textColor="@color/textColor"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="invisible"
+                    app:layout_constraintEnd_toEndOf="@id/tv_confirmed_label"
+                    app:layout_constraintStart_toStartOf="@id/tv_confirmed_label"
+                    app:layout_constraintTop_toBottomOf="@id/tv_confirmed_label"
+                    tools:text="@string/ex_num" />
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/sfl_confirmed_value"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/bg_rounded_placeholder"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_confirmed_value"
+                    app:layout_constraintEnd_toEndOf="@id/tv_confirmed_value"
+                    app:layout_constraintStart_toStartOf="@id/tv_confirmed_value"
+                    app:layout_constraintTop_toTopOf="@id/tv_confirmed_value" />
+
+                <TextView
+                    android:id="@+id/tv_recovered_label"
+                    style="@style/BoldTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/m16"
+                    android:layout_marginLeft="@dimen/m16"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/label_recovered"
+                    android:textColor="@color/recovered"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@id/tv_deaths_label"
+                    app:layout_constraintStart_toEndOf="@id/tv_confirmed_label"
+                    app:layout_constraintTop_toTopOf="@id/tv_confirmed_label" />
+
+                <TextView
+                    android:id="@+id/tv_recovered_value"
+                    style="@style/BoldTextView"
+                    setOverviewValue="@{recovered}"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/m8"
+                    android:textColor="@color/textColor"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="invisible"
+                    app:layout_constraintEnd_toEndOf="@id/tv_recovered_label"
+                    app:layout_constraintStart_toStartOf="@id/tv_recovered_label"
+                    app:layout_constraintTop_toBottomOf="@id/tv_recovered_label"
+                    tools:text="@string/ex_num" />
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/sfl_recovered_value"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/bg_rounded_placeholder"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_recovered_value"
+                    app:layout_constraintEnd_toEndOf="@id/tv_recovered_value"
+                    app:layout_constraintStart_toStartOf="@id/tv_recovered_value"
+                    app:layout_constraintTop_toTopOf="@id/tv_recovered_value" />
+
+                <TextView
+                    android:id="@+id/tv_deaths_label"
+                    style="@style/BoldTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/m16"
+                    android:layout_marginLeft="@dimen/m16"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/label_death"
+                    android:textColor="@color/death"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@id/tv_last_update"
+                    app:layout_constraintStart_toEndOf="@id/tv_recovered_label"
+                    app:layout_constraintTop_toTopOf="@id/tv_confirmed_label" />
+
+                <TextView
+                    android:id="@+id/tv_deaths_value"
+                    style="@style/BoldTextView"
+                    setOverviewValue="@{deaths}"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/m8"
+                    android:textColor="@color/textColor"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="invisible"
+                    app:layout_constraintEnd_toEndOf="@id/tv_deaths_label"
+                    app:layout_constraintStart_toStartOf="@id/tv_deaths_label"
+                    app:layout_constraintTop_toBottomOf="@id/tv_deaths_label"
+                    tools:text="@string/ex_num" />
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/sfl_deaths_value"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/bg_rounded_placeholder"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_deaths_value"
+                    app:layout_constraintEnd_toEndOf="@id/tv_deaths_value"
+                    app:layout_constraintStart_toStartOf="@id/tv_deaths_value"
+                    app:layout_constraintTop_toTopOf="@id/tv_deaths_value" />
+
+                <TextView
+                    android:id="@+id/tv_label_daily_updates"
+                    style="@style/BoldTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/m32"
+                    android:text="@string/label_daily_updates"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@id/tv_last_update"
+                    app:layout_constraintStart_toStartOf="@id/tv_last_update"
+                    app:layout_constraintTop_toBottomOf="@id/tv_confirmed_value" />
+
+                <Button
+                    android:id="@+id/btn_confirmed"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="@dimen/m16"
+                    android:background="@{shownIndex == 0 ? @drawable/bg_daily_menu_active : @drawable/bg_daily_menu_inactive}"
+                    android:text="@string/label_confirmed"
+                    android:textAllCaps="false"
+                    android:textColor="@color/textColor"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toStartOf="@id/btn_recovered"
+                    app:layout_constraintStart_toStartOf="@id/tv_label_daily_updates"
+                    app:layout_constraintTop_toBottomOf="@id/tv_label_daily_updates" />
+
+                <Button
+                    android:id="@+id/btn_recovered"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="@dimen/m12"
+                    android:layout_marginLeft="@dimen/m12"
+                    android:background="@{shownIndex == 1 ? @drawable/bg_daily_menu_active : @drawable/bg_daily_menu_inactive}"
+                    android:text="@string/label_recovered"
+                    android:textAllCaps="false"
+                    android:textColor="@color/textColor"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toStartOf="@id/btn_death"
+                    app:layout_constraintStart_toEndOf="@id/btn_confirmed"
+                    app:layout_constraintTop_toTopOf="@id/btn_confirmed" />
+
+                <Button
+                    android:id="@+id/btn_death"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="@dimen/m12"
+                    android:layout_marginLeft="@dimen/m12"
+                    android:background="@{shownIndex == 2 ? @drawable/bg_daily_menu_active : @drawable/bg_daily_menu_inactive}"
+                    android:text="@string/label_death"
+                    android:textAllCaps="false"
+                    android:textColor="@color/textColor"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@id/tv_label_daily_updates"
+                    app:layout_constraintStart_toEndOf="@id/btn_recovered"
+                    app:layout_constraintTop_toTopOf="@id/btn_confirmed" />
+
+                <ProgressBar
+                    android:id="@+id/pb_rv"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="100dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btn_confirmed" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_daily"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="@dimen/m24"
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/m16"
+                    android:visibility="gone"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btn_confirmed" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

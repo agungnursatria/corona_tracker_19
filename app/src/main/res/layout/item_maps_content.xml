@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="confirmed"
+            type="tech.awesome.data.network.Confirmed" />
+
+        <variable
+            name="country"
+            type="tech.awesome.data.network.CountryItem" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_maps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/m16"
+        android:layout_marginEnd="@dimen/m16"
+        android:layout_marginBottom="@dimen/m16">
+
+        <ImageView
+            android:id="@+id/iv_content_flag"
+            setFlagImage="@{country.iso2 ?? country.iso3}"
+            android:layout_width="48dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_placeholder_flag"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tv_content_region"
+            style="@style/BoldTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/m12"
+            android:layout_marginLeft="@dimen/m12"
+            android:text="@{confirmed.detailname}"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_content_flag"
+            app:layout_constraintTop_toTopOf="@id/iv_content_flag"
+            tools:text="Jakarta, Indonesia" />
+
+        <tech.awesome.coronatrack.widget.StatusText
+            android:id="@+id/tv_content_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/m8"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_content_region"
+            app:layout_constraintTop_toBottomOf="@id/tv_content_region"
+            tools:text="Confirmed: 1.231" />
+
+        <TextView
+            android:id="@+id/tv_content_update"
+            style="@style/DefaultTextView"
+            setFormattedDate="@{confirmed.lastUpdate}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/m8"
+            android:textColor="@color/subtitle_darker"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_content_region"
+            app:layout_constraintTop_toBottomOf="@id/tv_content_value"
+            tools:text="Last update 1 April 2020" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

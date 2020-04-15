@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="tech.awesome.coronatrack.ui.add_country.AddCountryActivity">
+
+    <data>
+
+        <variable
+            name="lastUpdate"
+            type="Long" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.drawerlayout.widget.DrawerLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <com.google.android.material.appbar.AppBarLayout
+                    android:id="@+id/apb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:elevation="0dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        android:background="@color/bg_canvas"
+                        app:popupTheme="@style/AppTheme.PopupOverlay">
+
+                        <TextView
+                            android:id="@+id/tv_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:lineSpacingExtra="5sp"
+                            android:text="@string/label_add_country"
+                            style="@style/BoldTextView"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="20sp" />
+
+                    </androidx.appcompat.widget.Toolbar>
+
+                </com.google.android.material.appbar.AppBarLayout>
+
+                <EditText
+                    android:id="@+id/et_search"
+                    style="@style/DefaultTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="@dimen/m16"
+                    android:layout_marginTop="@dimen/m16"
+                    android:layout_marginEnd="@dimen/m16"
+                    android:background="@drawable/bg_search"
+                    android:drawableStart="@drawable/ic_search"
+                    android:drawableLeft="@drawable/ic_search"
+                    android:drawablePadding="@dimen/m12"
+                    android:hint="@string/hint_search_country"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:paddingStart="@dimen/m12"
+                    android:paddingEnd="@dimen/m12"
+                    android:textColor="@color/subtitle"
+                    android:textColorHint="@color/subtitle_darker"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/apb"
+                    tools:ignore="Autofill" />
+
+                <TextView
+                    android:id="@+id/tv_label_region"
+                    style="@style/DefaultTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/m16"
+                    android:layout_marginLeft="@dimen/m16"
+                    android:layout_marginTop="@dimen/m24"
+                    android:text="@string/label_region"
+                    android:textColor="@color/textColor"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/et_search" />
+
+                <TextView
+                    android:id="@+id/tv_label_country"
+                    style="@style/BoldTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/m16"
+                    android:layout_marginRight="@dimen/m16"
+                    android:text="@string/label_country"
+                    android:textColor="@color/textColor"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_label_region" />
+
+                <ProgressBar
+                    android:id="@+id/pb_rv"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="100dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_label_region" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_region"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="@dimen/m12"
+                    android:clipToPadding="false"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_label_region" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.drawerlayout.widget.DrawerLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bs_add_country"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_canvas"
+            android:elevation="10dp"
+            android:padding="@dimen/m16"
+            app:behavior_hideable="true"
+            app:layout_behavior="@string/bottom_sheet_behavior"
+            tools:ignore="UnusedAttribute">
+
+            <ImageView
+                android:id="@+id/iv_bs_hamburger"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="Hamburger"
+                android:src="@drawable/ic_bs"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText" />
+
+
+            <TextView
+                android:id="@+id/tv_last_update"
+                style="@style/DefaultTextView"
+                setFormattedDate="@{lastUpdate}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/m32"
+                android:textColor="@color/subtitle_darker"
+                app:layout_constraintTop_toBottomOf="@id/iv_bs_hamburger"
+                tools:text="Last Update: 1 April 2020, 17.00" />
+
+            <TextView
+                android:id="@+id/tv_confirmed_label"
+                style="@style/DefaultTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/m16"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/label_confirmed"
+                android:textColor="@color/confirmed"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@id/tv_recovered_label"
+                app:layout_constraintStart_toStartOf="@id/tv_last_update"
+                app:layout_constraintTop_toBottomOf="@id/tv_last_update" />
+
+            <TextView
+                android:id="@+id/tv_confirmed_value"
+                style="@style/BoldTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/m8"
+                android:textColor="@color/textColor"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/tv_confirmed_label"
+                app:layout_constraintStart_toStartOf="@id/tv_confirmed_label"
+                app:layout_constraintTop_toBottomOf="@id/tv_confirmed_label"
+                tools:text="@string/ex_num" />
+
+            <TextView
+                android:id="@+id/tv_recovered_label"
+                style="@style/DefaultTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/m16"
+                android:layout_marginLeft="@dimen/m16"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/label_recovered"
+                android:textColor="@color/recovered"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@id/tv_deaths_label"
+                app:layout_constraintStart_toEndOf="@id/tv_confirmed_label"
+                app:layout_constraintTop_toTopOf="@id/tv_confirmed_label" />
+
+            <TextView
+                android:id="@+id/tv_recovered_value"
+                style="@style/BoldTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/m8"
+                android:textColor="@color/textColor"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/tv_recovered_label"
+                app:layout_constraintStart_toStartOf="@id/tv_recovered_label"
+                app:layout_constraintTop_toBottomOf="@id/tv_recovered_label"
+                tools:text="@string/ex_num" />
+
+            <TextView
+                android:id="@+id/tv_deaths_label"
+                style="@style/DefaultTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/m16"
+                android:layout_marginLeft="@dimen/m16"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/label_death"
+                android:textColor="@color/death"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@id/tv_last_update"
+                app:layout_constraintStart_toEndOf="@id/tv_recovered_label"
+                app:layout_constraintTop_toTopOf="@id/tv_confirmed_label" />
+
+            <TextView
+                android:id="@+id/tv_deaths_value"
+                style="@style/BoldTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/m8"
+                android:textColor="@color/textColor"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/tv_deaths_label"
+                app:layout_constraintStart_toStartOf="@id/tv_deaths_label"
+                app:layout_constraintTop_toBottomOf="@id/tv_deaths_label"
+                tools:text="@string/ex_num" />
+
+            <Button
+                android:id="@+id/btn_select_country"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/m16"
+                android:background="@drawable/bg_btn"
+                android:drawableStart="@drawable/ic_select"
+                android:drawableLeft="@drawable/ic_select"
+                android:drawablePadding="@dimen/m12"
+                android:lineSpacingExtra="2sp"
+                android:paddingStart="@dimen/m12"
+                android:paddingEnd="@dimen/m12"
+                android:text="@string/label_select_country"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tv_last_update"
+                app:layout_constraintTop_toBottomOf="@id/tv_confirmed_value" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+</layout>

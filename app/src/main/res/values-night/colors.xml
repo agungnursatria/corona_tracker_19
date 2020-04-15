@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/confirmed</color>
+    <color name="colorPrimaryDark">@color/bg_canvas</color>
+    <color name="colorAccent">@color/confirmed</color>
+
+    <color name="bg_canvas">#222A34</color>
+    <color name="bg_canvas_dark">#222A34</color>
+    <color name="bg_container">#283039</color>
+    <color name="bg_btn_daily_menu_active">#3b4653</color>
+    <color name="bg_btn_daily_menu_inactive">@color/bg_canvas</color>
+    <color name="border">#4b596a</color>
+    <color name="border2">#3b4653</color>
+    <color name="textColor">#ffffff</color>
+    <color name="statusBarColor">#ffffff</color>
+
+    <color name="confirmed">#00fff5</color>
+    <color name="death">#ff0000</color>
+    <color name="recovered">#20ed67</color>
+
+    <color name="pulse_confirmed">#8000fff5</color>
+    <color name="pulse_death">#80ff0000</color>
+    <color name="pulse_recovered">#8020ed67</color>
+
+    <color name="subtitle">#bbbbbb</color>
+    <color name="subtitle_darker">#7d838b</color>
+</resources>

@@ -1,0 +1,115 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    defaultConfig {
+        applicationId "tech.awesome.coronatrack"
+        minSdkVersion 15
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        buildConfigField("String", "BASE_URL", "\"https://covid19.mathdro.id/\"")
+        buildConfigField("String", "BASE_URL_COVID19", "\"https://api.covid19api.com/\"")
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix ".dev"
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.appcompat:appcompat:$appcompat"
+    implementation "com.google.android.material:material:$material_version"
+    implementation "androidx.core:core-ktx:$coreKtx"
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_version"
+    implementation "androidx.recyclerview:recyclerview:$rvVersion"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle"
+
+    // Testing
+    testImplementation "junit:junit:$junit"
+    androidTestImplementation "androidx.test.ext:junit:$junitExt"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
+    testImplementation "android.arch.core:core-testing:$archCore"
+    testImplementation "org.mockito:mockito-core:$mockito"
+    testImplementation "org.mockito:mockito-inline:$mockito"
+
+    implementation project(":utils")
+    implementation project(":network")
+    implementation project(":data")
+    implementation project(":domain")
+
+    // MPA Android Chart
+    implementation "com.github.PhilJay:MPAndroidChart:v$mpa_chart"
+
+    // Koin
+    implementation "org.koin:koin-android:$koin_version"
+    implementation "org.koin:koin-android-scope:$koin_version"
+    implementation "org.koin:koin-android-viewmodel:$koin_version"
+
+    // Architecture components
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+
+    // Multidex
+    implementation "androidx.multidex:multidex:$multidex"
+
+    // Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+
+    // Maps
+    implementation "com.google.android.gms:play-services-maps:$maps"
+
+    // Calligraphy
+    implementation "io.github.inflationx:calligraphy3:$calligraphy"
+    implementation "io.github.inflationx:viewpump:$viewpump"
+
+    // Stetho
+    implementation "com.facebook.stetho:stetho:$stetho"
+    implementation "com.facebook.stetho:stetho-okhttp3:$stetho"
+
+    // Timber
+    implementation "com.jakewharton.timber:timber:$timber"
+
+    // Moshi
+    implementation "com.squareup.retrofit2:converter-moshi:$converter_moshi_version"
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+
+    // Facebook Shimmering
+    implementation "com.facebook.shimmer:shimmer:$facebook_shimmer"
+}

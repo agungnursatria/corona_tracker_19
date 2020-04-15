@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="m32">32dp</dimen>
+    <dimen name="m24">24dp</dimen>
+    <dimen name="m16">16dp</dimen>
+    <dimen name="m12">12dp</dimen>
+    <dimen name="m8">8dp</dimen>
+    <dimen name="m4">4dp</dimen>
+
+    <dimen name="bs550">550dp</dimen>
+    <dimen name="bs250">250dp</dimen>
+</resources>
