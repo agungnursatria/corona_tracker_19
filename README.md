@@ -1,7 +1,7 @@
 # Corona Track
 Android covid19 data monitoring using MVVM, Coroutine, Room, Data Binding, Kotlin, Night/Dark Mode, Modularization, UnitTest etc 
 
-![Pic](https://user-images.githubusercontent.com/15356308/79291636-5bc7d200-7ef9-11ea-88c9-6b6c5e85f0ac.jpg)
+![Pic](https://user-images.githubusercontent.com/15356308/79304649-09e47380-7f1c-11ea-8e1b-a958a8cd079d.jpg)
 
 Library References:
 - [Koin](https://github.com/InsertKoinIO/koin)
